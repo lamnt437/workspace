@@ -1,0 +1,3 @@
+input file form: %s\t%s\n or %s\n
+
+=>get line, use strtok
