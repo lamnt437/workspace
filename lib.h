@@ -46,3 +46,8 @@ void preOrder(TreeType root);
 void inOrder(TreeType root);
 void postOrder(TreeType root);
 void BFS(TreeType root);
+TreeType searchBinTree(TreeType root, int key);
+TreeType getParent(TreeType root, TreeType ptr);///not tested
+void swapValueNodeTree(TreeType a, TreeType b);
+TreeType delete1(TreeType root);
+TreeType deleteNodeTree(TreeType root, int key);

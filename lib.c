@@ -1,5 +1,7 @@
 #include "lib.h"
 
+/*==========================Queue============================*/
+
 int isEmpty(Queue q){
 	return q.counter == 0;
 }
@@ -41,8 +43,7 @@ int enqueue(Queue *q, Element v){
 }
 
 Element *dequeue(Queue *q){
-	//edit temp value
-	Element *temp = NULL;//
+	Element *temp = NULL;
 	if(!isEmpty((*q))){
 		temp = (Element *)q->arr[q->front];
 		q->front = (q->front + 1) % QUEUE_SIZE;
@@ -51,51 +52,12 @@ Element *dequeue(Queue *q){
 	return temp;
 }
 
-/*
-void freeQueue(Queue *q){
-    Element *temp = NULL;
-    while(!isEmpty(*q)){
-        temp = dequeue(q);
-        free(temp;)
-    }
-}
 
-int main(){
-    // Element *ptr = makeContent(5);
-    Queue q1;
-    Element *temp = NULL;
-    q1.counter = 0;
-    q1.rear = 0;
-    q1.front = 0;
-
-    for(int i = 0; i < 10; i++){
-        enqueue(&q1, i);
-    }
-    printQueue(q1);
-    /*
-    int n = q1.counter;
-    int j = q1.front;
-
-
-    for(int i = 0; i < n; i++){
-        printElement((Element *)q1.arr[j]);
-        j++;
-    }
-
-    // Element *ptr = makeContent(5);
-    // printf("%d", *ptr);
-    while(!isEmpty(q1)){
-        temp = dequeue(&q1);
-        printf("%d ", *((int *)temp));
-    }
-    printf("\n");
-
-    return 0;
-}
-*/
 
 
 //////////////////////////////////////////////////////
+/*=================Binary Tree======================*/
+
 
 TreeType makeNodeTree(Content_t v){
   TreeType newNode = (TreeType)malloc(sizeof(NodeTree));
@@ -118,7 +80,7 @@ TreeType insertNodeTree(TreeType root, NodeTree *newNode){
 
 void preOrder(TreeType root){
   if(root != NULL){
-    printf("%d ", root->data);
+    printf("%d\t%s\n", (root->data).id, (root->data).toy);
     preOrder(root->left);
     preOrder(root->right);
   }
@@ -127,7 +89,7 @@ void preOrder(TreeType root){
 void inOrder(TreeType root){
   if(root != NULL){
     inOrder(root->left);
-    printf("%d ", root->data);
+    printf("%d\t%s\n", (root->data).id, (root->data).toy);
     inOrder(root->right);
   }
 }
@@ -136,7 +98,7 @@ void postOrder(TreeType root){
   if(root != NULL){
     postOrder(root->left);
     postOrder(root->right);
-    printf("%d ", root->data);
+    printf("%d\t%s\n", (root->data).id, (root->data).toy);
   }
 }
 
@@ -151,11 +113,73 @@ void BFS(TreeType root){
     enqueue(&q1, root);
     while(!isEmpty(q1)){
       ptr = dequeue(&q1);
-      printf("%d ", (*ptr)->data);
+      printf("%d\t%s\n", ((*ptr)->data).id, ((*ptr)->data).toy);
       if((*ptr)->left != NULL)
         enqueue(&q1, (*ptr)->left);
       if((*ptr)->right != NULL)
         enqueue(&q1, (*ptr)->right);
     }
   }
+}
+
+TreeType searchBinTree(TreeType root, int key){
+  if(root == NULL)
+    return NULL;
+  if((root->data).id == key)
+    return root;
+  if((root->data).id < key)
+    return searchBinTree(root->right, key);
+  return searchBinTree(root->left, key);
+}
+
+TreeType getParent(TreeType root, TreeType ptr){//not tested
+  if(root == NULL || root == ptr)
+    return NULL;
+  if(root->left == ptr || root->right == ptr)
+    return root;
+  TreeType p = getParent(root->left, ptr);
+  if(p != NULL)
+    return p;
+  return getParent(root->right, ptr);
+}
+
+void swapValueNodeTree(TreeType a, TreeType b){
+  Content_t temp = a->data;
+  a->data = b->data;
+  b->data = temp;
+}
+
+TreeType delete1(TreeType root){
+  if(root->left == NULL && root->right == NULL)
+    return NULL;
+  if(root->left == NULL && root->right != NULL)
+    return root->right;
+  if(root->left != NULL && root->right == NULL)
+    return root->left;
+  NodeTree *lmrParent = root;
+  NodeTree *lmr = root->right;//both left and right different from NULL
+  while(lmr->left != NULL){
+    lmrParent = lmr;
+    lmr = lmr->left;
+  } 
+  //swap
+  swapValueNodeTree(root, lmr);
+  if(lmrParent == root)
+    lmrParent->right = NULL;
+  else
+    lmrParent->left = NULL;
+  free(lmr);
+  return root;
+}
+
+TreeType deleteNodeTree(TreeType root, int key){
+  if(root != NULL){
+    if((root->data).id == key)
+      root = delete1(root);
+    else if((root->data).id < key)
+      root->right = deleteNodeTree(root->right, key);
+    else
+      root->left = deleteNodeTree(root->left, key);
+  }
+  return root;
 }
