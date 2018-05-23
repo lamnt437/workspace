@@ -1,4 +1,5 @@
 #include "lib.h"
+#include <ctype.h>
 
 int main(){
     FILE *readA = fopen("A.txt", "r");
@@ -9,16 +10,26 @@ int main(){
     Info temp_info;
     TreeType temp_insert = NULL;
     int key_temp;
+    char string_temp[LINE_LENGTH];
 
     while(fgets(s_line, LINE_LENGTH - 1, readA) != NULL){
+        //get id
         breakpoint = strtok(s_line, "\t");
         temp_info.id = atoi(breakpoint);
+
+        //get toy name
         breakpoint = strtok(NULL, "\t");
-        if(breakpoint == NULL){
-            temp_info.toy = NULL;
+        if(isspace(breakpoint[0])){//meet \n -> empty toy name
+            printf("Id %d doesn't have any toy name, please fill in: ", temp_info.id);
+            fgets(string_temp, LINE_LENGTH - 1, stdin);
+            string_temp[strlen(string_temp) - 1] = '\0';
+
+            temp_info.toy = (char *)malloc(TOY_LENGTH * sizeof(char));
+            strcpy(temp_info.toy, string_temp);
         }
         else{
             temp_info.toy = (char *)malloc(TOY_LENGTH * sizeof(char));
+            breakpoint[strlen(breakpoint) -1] = '\0';
             strcpy(temp_info.toy, breakpoint);
         }
         temp_insert = makeNodeTree(temp_info);
