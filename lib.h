@@ -13,6 +13,8 @@ typedef struct info{
 
 typedef Info Content_t;
 
+typedef Content_t Content;
+
 typedef struct node{
   Content_t data;
   struct node *left, *right;
