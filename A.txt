@@ -2,6 +2,3 @@
 303	maybay
 201	
 301	oto
-150	xe may
-250	lego
-302	iphone x

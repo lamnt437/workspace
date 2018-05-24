@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,3 +54,4 @@ TreeType getParent(TreeType root, TreeType ptr);///not tested
 void swapValueNodeTree(TreeType a, TreeType b);
 TreeType delete1(TreeType root);
 TreeType deleteNodeTree(TreeType root, int key);
+void inOrderReverse(TreeType root);

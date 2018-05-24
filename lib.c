@@ -94,6 +94,14 @@ void inOrder(TreeType root){
   }
 }
 
+void inOrderReverse(TreeType root){
+  if(root != NULL){
+    inOrderReverse(root->right);
+    printf("%d\t%s\n", (root->data).id, (root->data).toy);
+    inOrderReverse(root->left);
+  }
+}
+
 void postOrder(TreeType root){
   if(root != NULL){
     postOrder(root->left);

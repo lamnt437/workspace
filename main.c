@@ -1,6 +1,13 @@
 #include "lib.h"
 #include <ctype.h>
 
+char toy_type[100][100];
+int type_counter = 0;
+int freq[100] = {0};
+
+void Traverse(TreeType root);
+
+
 int main(){
     FILE *readA = fopen("A.txt", "r");
     FILE *readB = fopen("B.txt", "r");
@@ -13,6 +20,8 @@ int main(){
     char *breakpoint = NULL;
     Info temp_info;
     TreeType temp_insert = NULL;
+    TreeType ptr_search = NULL;
+    TreeType newNode = NULL;
     int key_temp;
     char string_temp[LINE_LENGTH];
 
@@ -94,12 +103,37 @@ int main(){
                 break;
             case 3:
                 printf("\nTIM KIEM\n\n");
+
+                printf("Du lieu bi trung:\n");
+                for(int i = 0; i < counter; i++){
+                    ptr_search = searchBinTree(rootA, rootB[i].id);
+                    if(ptr_search != NULL){
+                        printf("%d\t%s\n", (ptr_search->data).id, (ptr_search->data).toy);
+                        rootA = deleteNodeTree(rootA, rootB[i].id);
+                    }
+                }
+                printf("Cay da cap nhat:\n");
+                inOrder(rootA);
+
                 break;
             case 4:
                 printf("\nTONG HOP\n\n");
+                
+                for(int i = 0; i < counter; i++){
+                    newNode = makeNodeTree(rootB[i]);
+                    rootA = insertNodeTree(rootA, newNode);
+                }
+
+                printf("Cay A da duoc tong hop:\n");
+                inOrderReverse(rootA);
+
                 break;
             case 5:
                 printf("\nTHONG KE\n\n");
+                Traverse(rootA);
+                for(int i = 0; i < type_counter; i++){
+                    printf("%s\t%d\n", toy_type[i], freq[i]);
+                }
                 break;
             default:
                 printf("\nOut of range 1 - 6!\n\n");
@@ -117,21 +151,28 @@ int main(){
         getchar();
     }
     printf("\nEXIT\n");
-    
-    printf("Enter key to search: ");
-    scanf("%d", &key_temp);
-
-    TreeType ptr = searchBinTree(rootA, key_temp);
-    if(ptr != NULL){
-      printf("%d\t%s\n", (ptr->data).id, (ptr->data).toy);
-      ptr = getParent(rootA, ptr);
-      printf("%d\t%s\n", (ptr->data).id, (ptr->data).toy);
-    }
-    printf("Enter key to delete: ");
-    scanf("%d", &key_temp);
-
-    rootA = deleteNodeTree(rootA, key_temp);
-    inOrder(rootA);
 
     return 0;
+}
+
+
+
+void Traverse(TreeType root){
+  if(root != NULL){
+    Traverse(root->left);
+    int trigger = 0;
+    for(int i = 0; i < type_counter; i++){
+        if(!strcmp(toy_type[i], (root->data).toy)){
+            freq[i]++;
+            trigger = 1;
+            break;
+        }
+    }
+    if(trigger == 0){
+        strcpy(toy_type[type_counter], (root->data).toy);
+        freq[type_counter]++;
+        type_counter++;
+    }
+    Traverse(root->right);
+  }
 }

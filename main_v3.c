@@ -65,9 +65,6 @@ int main(){
     FILE *readA = fopen("A.txt", "r");
     FILE *readB = fopen("B.txt", "r");
 
-    char toy_type[100];
-    int type_counter = 0;
-
     TreeType rootA = NULL;
     Content rootB[100];
     int counter = 0;
@@ -336,9 +333,9 @@ void Traverse(TreeType root){
         }
     }
     if(trigger == 0){
-        type_counter++;
         strcpy(toy_type[type_counter], (root->data).toy);
         freq[type_counter]++;
+        type_counter++;
     }
     Traverse(root->right);
   }
