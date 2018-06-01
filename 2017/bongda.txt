@@ -1,0 +1,27 @@
+6
+1	Bach Khoa
+2	Xay dung
+3	Kinh te
+4	Thuy loi
+5	Inter
+6	Milan
+Vong 1
+1	2
+3	4
+5	6
+Vong 2
+1	3
+5	2
+6	4
+Vong 3
+1	5
+6	3
+4	2
+Vong 4
+1	6
+4	5
+2	3
+Vong 5
+1	4
+2	6
+3	5

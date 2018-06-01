@@ -32,6 +32,7 @@ void printContent(Content elm);
 void printList(Element *root);
 Element *makeNode(Content v);
 void insertFirst(List *root, Content v);
+List insertLast(List root, List ptr);
 Element *search(List root, int key);
 int delete(List *root, int key);
 
@@ -70,8 +71,11 @@ int main(){
         temp_info.score = 0;
         temp_info.thang = 0;
         temp_info.thua = 0;
-        
-        insertFirst(&root, temp_info);
+
+
+        List temp_ptr3 = makeNode(temp_info);
+        // insertFirst(&root, temp_info);
+        root = insertLast(root, temp_ptr3);
     }
 
     for(int j = 0; j < number - 1; j++){
@@ -239,6 +243,13 @@ void insertFirst(List *root, Content v){
 	Element *newNode = makeNode(v);
 	newNode->next = *root;
 	*root = newNode;
+}
+
+List insertLast(List root, List ptr){
+    if(root == NULL)
+        return ptr;
+    root->next = insertLast(root->next, ptr);
+    return root;
 }
 
 
