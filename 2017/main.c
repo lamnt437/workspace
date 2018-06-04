@@ -217,7 +217,7 @@ int main(){
 
 void printContent(Content v)
 {
-	printf("%5d%15s\t%d\t%d\t%d\n", v.id, v.name, v.score, v.thang, v.thua);
+	printf("%-5d%-15s\t%d\t%d\t%d\n", v.id, v.name, v.score, v.thang, v.thua);
 }
 
 void printList(Element *root)
